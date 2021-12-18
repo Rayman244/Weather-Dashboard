@@ -1,10 +1,11 @@
  const apiKey = '73f6da439500e5c6ba167934e0ca2bc8'
- const units = ['imperial','metric','standard']
  var cityTxtEl = $('#cityText')
  var saveBtnEl = $('#subBtn')
+ var unitSelector = $('#units')
+ var curTempEl = $('.tempEl')
  
 function cityDetails(lat,lon){
-    var testUnits = units[0]
+    var testUnits = unitSelector.val()
      var cityDetailsUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=${testUnits}&appid=${apiKey}`
      $.ajax({
          url:cityDetailsUrl,
@@ -50,11 +51,32 @@ function findCity(city){
 }
 saveBtnEl.on('click',function(e){
     e.preventDefault()
-    findCity(cityTxtEl.val())
+    findCity(cityTxtEl.val().toLowerCase())
     
 
 })
+function showCurWeather(){
+    navigator.geolocation.getCurrentPosition(success, error);
+    
+}
+// Getting current location
+function success(pos) {
+    var crd = pos.coords;
+    console.log(crd);
+    var curLat = crd.latitude
+    var curLon = crd.longitude
+    cityDetails(curLat,curLon)
+    console.log(`Current Latitude : ${curLat}`);
+    console.log(`Current Longitude: ${curLon}`);
+    
+  }
+  
+  function error(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+  }
+  
+  
+showCurWeather()
 
-
-findCity('cape may')
+// findCity('cape may')
 // cityDetails(testlat,testLon)
