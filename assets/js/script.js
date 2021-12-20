@@ -16,30 +16,39 @@
  var weekForecastContainer = $('.weekForecastContainer')
  var searchedContainer = $('#searchedContainer')
  var cityArr = ['Philadelphia','Cape May','Denver']
- 
+
  var searchedCities = localStorage.getItem('searchedCities') ? localStorage.getItem('searchedCities') :localStorage.setItem('searchedCities', cityArr)
 
  var selectedUnit;
  var selectedSpeed;
 
+
 //  handles unit selection
  function unitChecker(unitName){
     var tempTypes = ['°F','°C','°K'];
     var speedTypes = ['mph','m/s']
+   
 
      if(unitName === 'imperial'){
          selectedUnit = tempTypes[0]
          selectedSpeed = speedTypes[0]
+         
      }else if(unitName === 'metric'){
          selectedUnit = tempTypes[1]
          selectedSpeed = speedTypes[1]
+         
      }else{
         selectedUnit = tempTypes[2]
         selectedSpeed = speedTypes[1]
+        
 
      }
      return selectedUnit, selectedSpeed
  }
+
+
+ 
+
 
 function cityDetails(lat,lon){
     var units = unitSelector.val()
@@ -56,8 +65,8 @@ function cityDetails(lat,lon){
          var curClouds = response.current.clouds
          var curVisibility = response.current.visibility
          var curRain = response.current.rain ? response.current.rain : 0
+     
          
-         console.log();
          unitChecker(units)
         //  section1
          curTempEl.text(`Temp: ${currentTemp}${selectedUnit}`)
