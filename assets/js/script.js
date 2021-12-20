@@ -17,11 +17,12 @@
  var searchedContainer = $('#searchedContainer')
  var cityArr = ['Philadelphia','Cape May','Denver']
 
- var searchedCities = localStorage.getItem('searchedCities') ? localStorage.getItem('searchedCities') :localStorage.setItem('searchedCities', cityArr)
+ var searchedCities = []
+//  var searchedCities = localStorage.getItem('searchedCities') ? localStorage.getItem('searchedCities') : localStorage.setItem('searchedCities', cityArr)
 
  var selectedUnit;
  var selectedSpeed;
-
+var curCityName
 
 //  handles unit selection
  function unitChecker(unitName){
@@ -96,6 +97,8 @@ function findCity(city){
         url:findCityUrl,
         method:'GET'
     }).then(function(response){
+        console.log(response[0].name);
+        curCityName = response[0].name
         var cityLat = response[0].lat
      var cityLon = response[0].lon
      cityDetails(cityLat,cityLon)
@@ -150,7 +153,10 @@ function handleWeekForecast(weekArr){
 }
 function getSearchedCities(){
     searchedContainer.empty()
-    var searchedArr = searchedCities.split(',')
+    searchedCities = localStorage.getItem('searchedCities')
+        var searchedArr = searchedCities.split(',')
+        console.log(searchedArr);
+    
     
     for(i=0; i<searchedArr.length;i++){
         var cityBtn = $('<button>').attr('class','col-12 btn btn-secondary mt-1 text-capitalize')
@@ -195,13 +201,12 @@ function getDate(date){
 }
 searchBtnEl.on('click',function(e){
     e.preventDefault()
-    
     var newSearched = searchedCities + `,${cityTxtEl.val()}`
     console.log(newSearched);
     localStorage.setItem('searchedCities',newSearched )
     findCity(cityTxtEl.val())
     getSearchedCities()
-    searchedContainer.load()
+    
 })
 
 searchedContainer.on('click',function(e){
