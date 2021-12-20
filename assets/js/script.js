@@ -91,7 +91,7 @@ function cityDetails(lat,lon){
 }
  
 function findCity(city){
-    var findCityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`
+    var findCityUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`
     searchCityEl.text(`${city} ${moment().format('L')}`)
     $.ajax({
         url:findCityUrl,
