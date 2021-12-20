@@ -155,7 +155,7 @@ function getSearchedCities(){
     searchedContainer.empty()
     searchedCities = localStorage.getItem('searchedCities')
         var searchedArr = searchedCities.split(',')
-        console.log(searchedArr);
+        // console.log(searchedArr);
     
     
     for(i=0; i<searchedArr.length;i++){
