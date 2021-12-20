@@ -124,7 +124,7 @@ function error(err) {
   }
   // getting the weather image
 function getWeatherImage(imgId){
-      var imgUrl =`http://openweathermap.org/img/wn/${imgId}@2x.png`
+      var imgUrl =`https://openweathermap.org/img/wn/${imgId}@2x.png`
       return imgUrl
   }
 
