@@ -154,16 +154,18 @@ function handleWeekForecast(weekArr){
 function getSearchedCities(){
     searchedContainer.empty()
     searchedCities = localStorage.getItem('searchedCities')
+    if(searchedCities != null){
         var searchedArr = searchedCities.split(',')
         // console.log(searchedArr);
     
     
-    for(i=0; i<searchedArr.length;i++){
+    for(i=1; i<searchedArr.length;i++){
         var cityBtn = $('<button>').attr('class','col-12 btn btn-secondary mt-1 text-capitalize')
         cityBtn.text(searchedArr[i])
         searchedContainer.append(cityBtn)
         
     }
+}
     
    
 }
