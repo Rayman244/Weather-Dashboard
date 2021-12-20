@@ -24,8 +24,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ---
 
 ## Badges
-![badmath](https://img.shields.io/github/languages/top/nielsenjared/badmath)
-Badges aren't necessary, per se, but they demonstrate street cred. Badges let other developers know that you know what you're doing. Check out the badges hosted by [shields.io](https://shields.io/). You may not understand what they all represent now, but you will in time.
+![Javascript-Badge](https://img.shields.io/badge/Code-Javascript-yellow)
+![HTML-Badge](https://img.shields.io/badge/Code-HTML-%23DA391E)
+![CSS-Badge](https://img.shields.io/badge/Code-CSS-blue)
+![Bootstrap](https://img.shields.io/badge/Code-Bootstrap-green)
+![jQuery](https://img.shields.io/badge/Code-jQuery-blue)
+![License](https://img.shields.io/badge/license-MIT-lightgrey)
+
 
 ## Features
 - Search for a city and retrieve the weather data from that location
