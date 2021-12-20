@@ -1,8 +1,6 @@
  const apiKey = '73f6da439500e5c6ba167934e0ca2bc8';
- // at end go through and see if all are needed!!!!!!!!
-
  var cityTxtEl = $('#cityText');
- var saveBtnEl = $('#subBtn');
+ var searchBtnEl = $('#subBtn');
  var unitSelector = $('#units');
  var searchCityEl = $('#cityTxtEl')
  var curTempEl = $('#tempEl');
@@ -15,9 +13,10 @@
  var curCloudsEl = $('#curCloudsEl')
  var curVisibilityEl = $('#curVisibilityEl')
  var curRainEl = $('#curRainEl')
-  
  var weekForecastContainer = $('.weekForecastContainer')
+ var searchedContainer = $('#searchedContainer')
  var cityArr = ['Philadelphia','Cape May','Denver']
+ 
  var searchedCities = localStorage.getItem('searchedCities') ? localStorage.getItem('searchedCities') :localStorage.setItem('searchedCities', cityArr)
 
  var selectedUnit;
@@ -83,7 +82,7 @@ function cityDetails(lat,lon){
  
 function findCity(city){
     var findCityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`
-    searchCityEl.text(city)
+    searchCityEl.text(`${city} ${moment().format('L')}`)
     $.ajax({
         url:findCityUrl,
         method:'GET'
@@ -132,14 +131,29 @@ function handleWeekForecast(weekArr){
         dateEl.text(getDate(weekArr[i].dt))
         imgEl.attr('src',getWeatherImage(weekArr[i].weather[0].icon))
         descEl.text(weekArr[i].weather[0].description)
-        tempEl.text(`Temp: ${weekArr[i].temp.day}${selectedUnit}`)
-        windEl.text(`Wind: ${weekArr[i].wind_speed}${selectedSpeed}`)
+        tempEl.text(`Temp: ${weekArr[i].temp.day} ${selectedUnit}`)
+        windEl.text(`Wind: ${weekArr[i].wind_speed} ${selectedSpeed}`)
         humidEl.text(`Humidity: ${weekArr[i].humidity} %`)
         // Attaching elements together
         cardEl.append(dateEl,imgEl,descEl,tempEl,windEl, humidEl)
         weekForecastContainer.append(cardEl)
     }
 }
+function getSearchedCities(){
+    searchedContainer.empty()
+    var searchedArr = searchedCities.split(',')
+    
+    for(i=0; i<searchedArr.length;i++){
+        var cityBtn = $('<button>').attr('class','col-12 btn btn-secondary mt-1 text-capitalize')
+        cityBtn.text(searchedArr[i])
+        searchedContainer.append(cityBtn)
+        
+    }
+    
+   
+}
+
+// UV Checker
 function uvChecker(rating){
     if(rating<3){
         curUvIndexEl.text('Low')
@@ -170,19 +184,20 @@ function uvChecker(rating){
 function getDate(date){
     return moment.unix(date).format('L');
 }
-saveBtnEl.on('click',function(e){
+searchBtnEl.on('click',function(e){
     e.preventDefault()
-    var searchedArr = searchedCities.split(',')
-    var newSearched = searchedArr + `,${cityTxtEl.val()}`
+    
+    var newSearched = searchedCities + `,${cityTxtEl.val()}`
     console.log(newSearched);
     localStorage.setItem('searchedCities',newSearched )
-  
     findCity(cityTxtEl.val())
-    
-
+    getSearchedCities()
+    searchedContainer.load()
 })
-function handleSearchedCities(cities){
-    for(i=0;i<cities.length;i++){}
-}
+
+searchedContainer.on('click',function(e){
+    e.preventDefault()
+    findCity(e.target.textContent)
+})
 showCurWeather()
-getDate(1640016000)
+getSearchedCities()
