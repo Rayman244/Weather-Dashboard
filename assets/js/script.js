@@ -97,7 +97,7 @@ function findCity(city){
         url:findCityUrl,
         method:'GET'
     }).then(function(response){
-        console.log(response[0].name);
+        // console.log(response[0].name);
         curCityName = response[0].name
         var cityLat = response[0].lat
      var cityLon = response[0].lon
@@ -204,7 +204,7 @@ function getDate(date){
 searchBtnEl.on('click',function(e){
     e.preventDefault()
     var newSearched = searchedCities + `,${cityTxtEl.val()}`
-    console.log(newSearched);
+    // console.log(newSearched);
     localStorage.setItem('searchedCities',newSearched )
     findCity(cityTxtEl.val())
     getSearchedCities()
